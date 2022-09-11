@@ -47,6 +47,13 @@ def format_datetime(value, format='medium'):
         format = "EE MM, dd, y h:mma"
     return babel.dates.format_datetime(date, format, locale='en')
 
+def format_genres(genres):
+    a = genres.replace('{', '')
+    b = a.replace('}', '')
+    formatted_genres = b.split(",")
+    return formatted_genres
+
+
 
 app.jinja_env.filters['datetime'] = format_datetime
 
@@ -154,7 +161,7 @@ def show_venue(venue_id):
     data = {
         "id": venue.id,
         "name": venue.name,
-        "genres": venue.genres,
+        "genres": format_genres(venue.genres),
         "address": venue.address,
         "city": venue.city,
         "state": venue.state,
@@ -321,7 +328,7 @@ def show_artist(artist_id):
     data = {
         "id": artist.id,
         "name": artist.name,
-        "genres": artist.genres.split(","),
+        "genres":format_genres(artist.genres),
         "city": artist.city,
         "state": artist.state,
         "phone": artist.phone,
@@ -404,7 +411,7 @@ def edit_venue(venue_id):
         form.state.data = venue.state
         form.phone.data = venue.phone
         form.address.data = venue.address
-        form.genres.data = venue.genres
+        form.genres.data = format_genres(venue.genres)
         form.facebook_link.data = venue.facebook_link
         form.image_link.data = venue.image_link
         form.website_link.data = venue.website_link
