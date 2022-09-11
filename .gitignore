@@ -1,2 +1,5 @@
 # Ignore local db config
 config.py
+
+# Ignore __pycache__
+__pycache__/*
